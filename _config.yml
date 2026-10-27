@@ -1,3 +1,499 @@
-theme: jekyll-theme-minimal
-title: Octocat's homepage
-description: Bookmark this to keep an eye on my project updates!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>林一 · 个人网站</title>
+  <!-- 简洁现代风格，无外部依赖，纯CSS适配手机 -->
+  <style>
+    /* 全局重置与变量 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #f9fafc;
+      --surface: #ffffff;
+      --text-primary: #1e1e2f;
+      --text-secondary: #4a4e69;
+      --accent: #2d7a6e;       /* 现代低调绿 */
+      --accent-light: #e2f0ee;
+      --border-light: #e6e9f0;
+      --card-shadow: 0 12px 30px rgba(0, 0, 0, 0.03), 0 4px 10px rgba(0, 0, 0, 0.02);
+      --radius-md: 20px;
+      --radius-sm: 12px;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      --transition: all 0.2s ease;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding: 0 1rem;
+    }
+
+    /* 主容器 —— 最大宽度，居中，左右留白自适应 */
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 0.5rem;
+    }
+
+    /* ===== 导航栏 ===== */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 1rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .logo:hover {
+      color: var(--accent);
+    }
+
+    /* 导航链接 —— 手机端可换行，间距友好 */
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 1rem;
+      transition: var(--transition);
+      padding: 0.25rem 0;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ===== 个人简介区 ===== */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 2rem 1rem 3rem;
+      background: linear-gradient(145deg, var(--surface) 0%, #fbfdff 100%);
+      border-radius: var(--radius-md);
+      margin: 1.5rem 0 2rem;
+      box-shadow: var(--card-shadow);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+
+    .avatar {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      border: 3px solid var(--surface);
+      box-shadow: 0 8px 20px rgba(45, 122, 110, 0.1);
+      transition: var(--transition);
+    }
+
+    .avatar svg {
+      width: 58px;
+      height: 58px;
+      color: var(--accent);
+      stroke-width: 1.5;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .hero .tagline {
+      font-size: 1.2rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .hero .bio {
+      max-width: 600px;
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      margin-bottom: 1.8rem;
+      line-height: 1.65;
+    }
+
+    .contact-btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 0.8rem 2.2rem;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 1rem;
+      letter-spacing: 0.3px;
+      transition: var(--transition);
+      border: 1px solid transparent;
+      box-shadow: 0 4px 12px rgba(45, 122, 110, 0.15);
+    }
+
+    .contact-btn:hover {
+      background: #23655b;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(45, 122, 110, 0.2);
+    }
+
+    /* ===== 作品展示区 ===== */
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin: 3rem 0 1.5rem 0;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+    }
+
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-light);
+      margin-left: 1.5rem;
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin-bottom: 3rem;
+    }
+
+    /* 作品卡片 */
+    .work-card {
+      background: var(--surface);
+      border-radius: var(--radius-sm);
+      padding: 1.6rem 1.5rem;
+      border: 1px solid var(--border-light);
+      box-shadow: var(--card-shadow);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .work-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 38px -8px rgba(0, 0, 0, 0.08), 0 12px 20px -6px rgba(0, 0, 0, 0.03);
+      border-color: rgba(45, 122, 110, 0.25);
+    }
+
+    .work-icon {
+      background: var(--accent-light);
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+    }
+
+    .work-icon svg {
+      width: 28px;
+      height: 28px;
+      color: var(--accent);
+      stroke-width: 1.5;
+    }
+
+    .work-card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .work-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 1.4rem;
+      flex: 1;
+    }
+
+    .work-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: auto;
+    }
+
+    .tag {
+      background: var(--bg);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: 0.2px;
+      border: 1px solid var(--border-light);
+    }
+
+    /* 页脚 */
+    .footer {
+      text-align: center;
+      padding: 2.5rem 0 2rem;
+      margin-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* ===== 移动端微调 ===== */
+    @media (max-width: 600px) {
+      body {
+        padding: 0 0.75rem;
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+        padding: 1rem 0;
+      }
+
+      .nav-links {
+        gap: 1.2rem;
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .nav-links a {
+        font-size: 0.95rem;
+      }
+
+      .hero {
+        padding: 1.8rem 1rem 2.2rem;
+        margin: 1rem 0 1.5rem;
+      }
+
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .hero .tagline {
+        font-size: 1rem;
+      }
+
+      .hero .bio {
+        font-size: 0.95rem;
+      }
+
+      .avatar {
+        width: 90px;
+        height: 90px;
+      }
+
+      .avatar svg {
+        width: 48px;
+        height: 48px;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+        margin: 2rem 0 1.2rem;
+      }
+
+      .works-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+
+      .work-card {
+        padding: 1.4rem 1.2rem;
+      }
+
+      .contact-btn {
+        padding: 0.7rem 1.8rem;
+        font-size: 0.95rem;
+      }
+    }
+
+    /* 超小屏幕适配 */
+    @media (max-width: 380px) {
+      .nav-links {
+        gap: 0.8rem;
+      }
+      .nav-links a {
+        font-size: 0.85rem;
+      }
+    }
+
+    /* 辅助可访问性 */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 导航栏 -->
+    <nav class="navbar">
+      <a href="#" class="logo" aria-label="首页">林一<span style="color: var(--accent);">.</span></a>
+      <ul class="nav-links">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">作品</a></li>
+        <li><a href="#">关于</a></li>
+        <li><a href="#">联系</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <!-- 个人简介区 (Hero) -->
+      <section class="hero">
+        <div class="avatar" aria-hidden="true">
+          <!-- 简约抽象人像图标，无外部依赖 -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M5.5 21v-2a6 6 0 0 1 12 0v2" />
+          </svg>
+        </div>
+        <h1>林一</h1>
+        <div class="tagline">产品设计师 & 创意开发者</div>
+        <p class="bio">
+          热爱将想法转化为简洁、有温度的数字化体验。相信设计的力量在于细节与人文关怀，目前专注于前端交互与品牌视觉。
+        </p>
+        <a href="#" class="contact-btn">与我联系</a>
+      </section>
+
+      <!-- 作品展示区 -->
+      <section>
+        <h2 class="section-title">精选作品</h2>
+        <div class="works-grid">
+          <!-- 作品卡片 1 -->
+          <article class="work-card">
+            <div class="work-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <line x1="8" y1="10" x2="16" y2="10" />
+                <line x1="8" y1="14" x2="12" y2="14" />
+              </svg>
+            </div>
+            <h3>Flow 笔记</h3>
+            <p>极简智能笔记应用，帮助创作者整理灵感与任务，支持 Markdown 与实时同步。</p>
+            <div class="work-tags">
+              <span class="tag">UX/UI</span>
+              <span class="tag">React</span>
+              <span class="tag">移动端</span>
+            </div>
+          </article>
+
+          <!-- 作品卡片 2 -->
+          <article class="work-card">
+            <div class="work-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+              </svg>
+            </div>
+            <h3>声之形 · 播客</h3>
+            <p>独立播客品牌视觉与网站设计，聚焦声音故事，用极简界面突出内容本身。</p>
+            <div class="work-tags">
+              <span class="tag">品牌设计</span>
+              <span class="tag">Web</span>
+              <span class="tag">响应式</span>
+            </div>
+          </article>
+
+          <!-- 作品卡片 3 -->
+          <article class="work-card">
+            <div class="work-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 12h-4l-3 9H9l-3-9H2" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </div>
+            <h3>Pulse 仪表盘</h3>
+            <p>面向健康数据追踪的轻量仪表盘，可视化每日活动与趋势，界面干净直观。</p>
+            <div class="work-tags">
+              <span class="tag">数据可视化</span>
+              <span class="tag">Vue</span>
+              <span class="tag">仪表盘</span>
+            </div>
+          </article>
+
+          <!-- 作品卡片 4 (额外增加一个，展示自适应网格) -->
+          <article class="work-card">
+            <div class="work-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                <line x1="12" y1="22.08" x2="12" y2="12" />
+              </svg>
+            </div>
+            <h3>织光 · 作品集</h3>
+            <p>为摄影师打造的沉浸式作品集网站，以网格与光影为设计语言，加载流畅。</p>
+            <div class="work-tags">
+              <span class="tag">HTML/CSS</span>
+              <span class="tag">动效</span>
+              <span class="tag">网格</span>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+      <p>© 2025 林一 · 保持好奇，持续创造</p>
+      <p style="margin-top: 0.6rem;">
+        <a href="#">GitHub</a> · <a href="#">Dribbble</a> · <a href="#">邮件</a>
+      </p>
+    </footer>
+  </div>
+  <!-- 简单的交互反馈(无JS，纯css) -->
+</body>
+</html>
